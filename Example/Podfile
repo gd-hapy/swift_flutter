@@ -1,9 +1,13 @@
 use_frameworks!
 
 platform :ios, '10.0'
+flutter_application_path = '../flutter_module'
+load File.join(flutter_application_path, '.ios', 'Flutter', 'podhelper.rb')
 
 target 'swift_flutter_Example' do
   pod 'swift_flutter', :path => '../'
+  install_all_flutter_pods(flutter_application_path)
+
 
   target 'swift_flutter_Tests' do
     inherit! :search_paths
@@ -11,3 +15,8 @@ target 'swift_flutter_Example' do
     
   end
 end
+
+post_install do |installer|
+  flutter_post_install(installer) if defined?(flutter_post_install)
+end
+
